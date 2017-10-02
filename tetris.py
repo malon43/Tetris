@@ -1,5 +1,4 @@
 import pygame
-import os
 from random import shuffle
 from sys import exit
 
@@ -165,8 +164,8 @@ menuDisplay = pygame.Surface(displayDimensions, pygame.SRCALPHA)
 pauseDisplay = pygame.Surface(displayDimensions, pygame.SRCALPHA)
 gameDisplay = pygame.Surface(displayDimensions, pygame.SRCALPHA)
 
-fontBasic = pygame.font.Font(os.path.join("fonts/prstart.ttf"), 20)
-fontBig = pygame.font.Font(os.path.join("fonts/prstart.ttf"), 32)
+fontBasic = pygame.font.Font("fonts/prstart.ttf", 20)
+fontBig = pygame.font.Font("fonts/prstart.ttf", 32)
 
 lvlText = fontBasic.render("LEVEL", False, white)
 lnsText = fontBasic.render("LINES", False, white)
@@ -203,14 +202,14 @@ sgpTextPos = ((width - sgpTextSize[0]) // 2 - sgpTextSize[1], 250)
 volumeTextRect.center = (width // 2, 400)
 
 #  Texture Loading
-bgTexture = pygame.image.load(os.path.join("textures/background.png"))
-rButtonTexture = pygame.image.load(os.path.join("textures/buttonRight.png"))
-lButtonTexture = pygame.image.load(os.path.join("textures/buttonLeft.png"))
-rPlayButtonTexture = pygame.image.load(os.path.join("textures/playButtonRight.png"))
-tetrisLogo = pygame.image.load(os.path.join("textures/tetrisLogo.png"))
-mainMenuButtonTexture = pygame.image.load(os.path.join("textures/mainMenuButton.png"))
-quitButtonTexture = pygame.image.load(os.path.join("textures/quitButton.png"))
-icon = pygame.image.load(os.path.join("textures/icon.png"))
+bgTexture = pygame.image.load("textures/background.png")
+rButtonTexture = pygame.image.load("textures/buttonRight.png")
+lButtonTexture = pygame.image.load("textures/buttonLeft.png")
+rPlayButtonTexture = pygame.image.load("textures/playButtonRight.png")
+tetrisLogo = pygame.image.load("textures/tetrisLogo.png")
+mainMenuButtonTexture = pygame.image.load("textures/mainMenuButton.png")
+quitButtonTexture = pygame.image.load("textures/quitButton.png")
+icon = pygame.image.load("textures/icon.png")
 
 buttonSize = rPlayButtonTexture.get_size()
 gOButtonSize = mainMenuButtonTexture.get_size()
