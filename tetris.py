@@ -209,6 +209,7 @@ rPlayButtonTexture = pygame.image.load("textures/playButtonRight.png")
 tetrisLogo = pygame.image.load("textures/tetrisLogo.png")
 mainMenuButtonTexture = pygame.image.load("textures/mainMenuButton.png")
 quitButtonTexture = pygame.image.load("textures/quitButton.png")
+backButtonTexture = pygame.image.load("textures/backButton.png")
 icon = pygame.image.load("textures/icon.png")
 
 buttonSize = rPlayButtonTexture.get_size()
@@ -497,6 +498,14 @@ def game_in_animation():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 quitplz()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LALT:
+                    alt_down = True
+                elif event.key == pygame.K_F4 and alt_down:
+                    quitplz()
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_LALT:
+                    alt_down = False
         gameDisplay.blit(bgTexture, (0, 0))
         board_outline_animation(size)
         mainDisplay.blit(gameDisplay, (0, 0))
@@ -518,6 +527,14 @@ def game_out_animation(board):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 quitplz()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LALT:
+                    alt_down = True
+                elif event.key == pygame.K_F4 and alt_down:
+                    quitplz()
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_LALT:
+                    alt_down = False
         gameDisplay.blit(bgTexture, (0, 0))
         board_outline_animation(size)
         board_animation(size, board)
@@ -549,6 +566,14 @@ def mm_in_animation():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 quitplz()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LALT:
+                    alt_down = True
+                elif event.key == pygame.K_F4 and alt_down:
+                    quitplz()
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_LALT:
+                    alt_down = False
         menuDisplay.blit(bgTexture, (0, 0))
         playButton1.move_button_in(bTime)
         playButton2.move_button_in(bTime)
@@ -568,6 +593,14 @@ def mm_out_animation():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 quitplz()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LALT:
+                    alt_down = True
+                elif event.key == pygame.K_F4 and alt_down:
+                    quitplz()
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_LALT:
+                    alt_down = False
         menuDisplay.blit(bgTexture, (0, 0))
         playButton1.move_button_out(aTime)
         playButton2.move_button_out(aTime)
@@ -611,9 +644,11 @@ def game_over_screen(level, lines, score):
     game_over = True
 
     while game_over:
+        alt_down = False
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 quitplz()
+
             elif event.type == pygame.MOUSEBUTTONUP:
                 mpos = pygame.mouse.get_pos()
                 if mMButtonPos[0] <= mpos[0] <= mMButtonPos[0] + gOButtonSize[0] and\
@@ -623,6 +658,15 @@ def game_over_screen(level, lines, score):
                 elif qButtonPos[0] <= mpos[0] <= qButtonPos[0] + gOButtonSize[0] and\
                                         qButtonPos[1] <= mpos[1] <= qButtonPos[1] + gOButtonSize[1]:
                     quitplz()
+
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LALT:
+                    alt_down = True
+                elif event.key == pygame.K_F4 and alt_down:
+                    quitplz()
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_LALT:
+                    alt_down = False
 
 
 def game():
@@ -645,6 +689,7 @@ def game():
     left_down = False
     right_down = False
     down_down = False
+    alt_down = False
 
     down_countdown = 0
     right_countdown1 = 0
@@ -667,9 +712,11 @@ def game():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 quitplz()
+
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_p:
                     pause_menu(False)
+
                 elif event.key == pygame.K_m:
                     if themeVolume == 0:
                         if lastThemeVolume == 0:
@@ -680,18 +727,23 @@ def game():
                         lastThemeVolume = themeVolume
                         themeVolume = 0
                     pygame.mixer.music.set_volume(themeVolume)
+
                 elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
                     down_down = True
+
                 elif event.key == pygame.K_UP or event.key == pygame.K_w:
                     if can_tetromino_rotate(gBoard, activeTetromino, tetrominoProps, 1):
                         tetrominoProps[1] += 1
                         if tetrominoProps[1] >= 3:
                             tetrominoProps[1] = -1
                     updatedisplay = True
+
                 elif event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                     right_down = True
+
                 elif event.key == pygame.K_LEFT or event.key == pygame.K_a:
                     left_down = True
+
                 elif event.key == pygame.K_SPACE or event.key == pygame.K_RETURN:
                     gBoard, gameOver = tp_tetromino_down(gBoard, activeTetromino, tetrominoProps)
 
@@ -726,6 +778,13 @@ def game():
                     lines_total += lines
                     level = lines_total // 10
                     updatedisplay = True
+
+                elif event.key == pygame.K_LALT:
+                    alt_down = True
+
+                elif event.key == pygame.K_F4 and alt_down:
+                    quitplz()
+
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                     down_down = False
@@ -741,6 +800,9 @@ def game():
                     left_countdown1 = 0
                     left_countdown2 = 0
                     s_cycle_left = 0
+
+                elif event.key == pygame.K_LALT:
+                    alt_down = False
 
         if left_down and not right_down:
             if (s_cycle_left == 1 and left_countdown1 <= 0) or (s_cycle_left >= 2 and left_countdown2 <= 0)\
@@ -890,6 +952,14 @@ def main_menu():
                     mm_out_animation()
                     settings_menu()
                     mm_in_animation()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LALT:
+                    alt_down = True
+                elif event.key == pygame.K_F4 and alt_down:
+                    quitplz()
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_LALT:
+                    alt_down = False
 
 
 
@@ -915,6 +985,13 @@ def pause_menu(unpause_on_focus):
                     paused = False
                     pygame.mouse.set_visible(False)
                     pygame.mixer.music.play(-1, themeplaytime)
+                if event.key == pygame.K_LALT:
+                    alt_down = True
+                elif event.key == pygame.K_F4 and alt_down:
+                    quitplz()
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_LALT:
+                    alt_down = False
 
 
 def draw_settings():
@@ -950,9 +1027,14 @@ def settings_menu():
                     showGhostPiece = not showGhostPiece
                     draw_settings()
                     pygame.display.update()
-
-
-
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LALT:
+                    alt_down = True
+                elif event.key == pygame.K_F4 and alt_down:
+                    quitplz()
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_LALT:
+                    alt_down = False
 
 
 mm_in_animation()
